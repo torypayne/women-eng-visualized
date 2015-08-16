@@ -4,6 +4,9 @@
     <title>dc.js - Pie Chart Example</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
 </head>
 <body>
 <h1>Hello World</h1>
@@ -14,6 +17,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+
+d3.json('data.json', function (error, data) {
+  var companyData = data;
+
+  //sample date 11/8/2013
+  var fullDateFormat = d3.time.format('%-m/%-d/%Y');
+  var yearFormat = d3.time.format('%Y');
+  var monthFormat = d3.time.format('%-m');
+
+  // normalize/parse data so dc can correctly sort & bin them
+  // I like to think of each "d" as a row in a spreadsheet
+  _.each(beerData, function(d) {
+    d.count = +d.count;
+    // round to nearest 0.25
+    d.rating_score = Math.round(+d.rating_score * 4) / 4;
+    d.beer.rating_score = Math.round(+d.beer.rating_score *4) / 4;
+    // round to nearest 0.5
+    d.beer.beer_abv = Math.round(+d.beer.beer_abv * 2) / 2;
+    // round to nearest 10
+    d.beer.beer_ibu = Math.floor(+d.beer.beer_ibu / 10) * 10;
+
+    d.first_had_dt = fullDateFormat.parse(d.first_had);
+    d.first_had_year = +yearFormat(d.first_had_dt);
+    d.first_had_month = monthFormat(d.first_had_dt);
+    d.first_had_day = dayOfWeekFormat(d.first_had_dt);
+  });
+
+
+
 var chart = dc.pieChart("#test");
 d3.csv("/static/data.csv", function(error, experiments) {
   var ndx           = crossfilter(experiments),

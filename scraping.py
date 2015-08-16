@@ -26,7 +26,7 @@ for i in data:
 	cleaned_data[key]["numfemaleeng"] = info["numfemaleeng"].text
 	cleaned_data[key]["numeng"] = info["numeng"].text
 	cleaned_data[key]["percentfemaleeng"] = info["percentfemaleeng"].text
-
+	cleaned_data[key]["lastupdated"] = info["lastupdated"].text
 
 del cleaned_data["all"]
 # print cleaned_data
