@@ -1,5 +1,6 @@
 import gdata
 from gdata.spreadsheet.service import SpreadsheetsService
+import json
 
 #Basic info to pull the sheet and start scraping.  Since this is a public sheet we can
 #skip the whole authentication song and dance
@@ -27,6 +28,7 @@ for i in data:
 	cleaned_data[key]["percentfemaleeng"] = info["percentfemaleeng"].text
 
 
+del cleaned_data["all"]
 # print cleaned_data
 
 f = open("data.py", "w")
@@ -37,7 +39,9 @@ f.write(line)
 
 f.close()
 
+j = open("data.json", "w")
+j.write(json.dumps(cleaned_data))
 
 
-
+print "Success!"
 
