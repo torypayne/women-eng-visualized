@@ -28,7 +28,7 @@ d3.json('data.json', function (error, data) {
 
   // normalize/parse data so dc can correctly sort & bin them
   // I like to think of each "d" as a row in a spreadsheet
-  _.each(beerData, function(d) {
+  _.each(companyData, function(d) {
     d.count = +d.count;
     // round to nearest 0.25
     d.rating_score = Math.round(+d.rating_score * 4) / 4;
